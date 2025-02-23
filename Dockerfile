@@ -1,14 +1,14 @@
-# Use an official OpenJDK runtime as a parent image
+# Use an official Java runtime as a parent image
 FROM eclipse-temurin:17-jdk
 
-# Set the working directory inside the container
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the Maven build output (JAR file) into the container
-COPY target/*.jar app.jar
+# Copy Maven wrapper and source code
+COPY . .
 
-# Expose port 8080 (for local testing)
-EXPOSE 8080
+# Build the application inside the container
+RUN ./mvnw clean package -DskipTests
 
-# Command to run the Spring Boot app
-CMD ["java", "-jar", "app.jar"]
+# Copy the built JAR file to the final container setup
+CMD ["java", "-jar", "target/*.jar"]
