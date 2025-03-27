@@ -1,6 +1,0 @@
-com\example\employee_salary\controllers\TestController.class
-com\example\employee_salary\repository\EmployeeRepository.class
-com\example\employee_salary\controllers\EmployeeController.class
-com\example\employee_salary\model\Employee.class
-com\example\employee_salary\EmployeeSalaryApplication.class
-com\example\employee_salary\service\EmployeeService.class
