@@ -24,7 +24,6 @@ public class EmployeeService {
         double baseSalary = employee.getBaseSalary();
         double allowances = employee.getAllowances();
 
-        // Overtime rate is typically 1.5x regular hourly rate
         double hourlyRate = baseSalary / 160; // Assuming 160 work hours per month
         double overtimePay = overtimeHours * (hourlyRate * 1.5);
 

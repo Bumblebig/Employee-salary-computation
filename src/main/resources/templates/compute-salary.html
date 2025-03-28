@@ -205,7 +205,6 @@
       <p>Calculate employee compensation with overtime</p>
     </div>
 
-    <!-- Employee Information -->
     <div class="employee-info" th:if="${employee != null}">
       <p><strong>Employee:</strong> <span th:text="${employee.name}">Employee Name</span></p>
       <p><strong>Role:</strong> <span th:text="${employee.role}">Employee Role</span></p>
@@ -213,7 +212,6 @@
           th:text="${#numbers.formatDecimal(employee.baseSalary, 0, 'COMMA', 2, 'POINT')}">0.00</span></p>
     </div>
 
-    <!-- Salary Computation Form -->
     <form th:action="@{/employees/{id}/compute-salary(id=${employee.id})}" method="post">
       <div class="form-group">
         <label for="overtimeHours">Overtime Hours</label>
@@ -225,14 +223,12 @@
       <button type="submit" class="btn">Calculate Salary</button>
     </form>
 
-    <!-- Salary Result Section -->
     <div class="salary-result" th:if="${computedSalary != null}">
       <h3>Total Compensation</h3>
       <div class="salary-amount">
         $<span th:text="${#numbers.formatDecimal(computedSalary, 0, 'COMMA', 2, 'POINT')}">0.00</span>
       </div>
 
-      <!-- Calculation Breakdown -->
       <div class="calculation-details">
         <h4>Calculation Breakdown</h4>
         <p><strong>Base Salary:</strong> $<span

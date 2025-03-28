@@ -62,7 +62,6 @@ public class EmployeeController {
             @RequestParam int overtimeHours,
             Model model) {
         try {
-            // Compute salary and get detailed breakdown
             double totalSalary = employeeService.computeSalary(id, overtimeHours);
             Optional<Employee> employee = employeeRepository.findById(id);
 
@@ -80,7 +79,7 @@ public class EmployeeController {
                 return "compute-salary";
             }
         } catch (RuntimeException e) {
-            // Handle employee not found or other computation errors
+
             return "redirect:/employees";
         }
 
