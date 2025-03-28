@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Employee</title>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-hover: #3a56d4;
+      --secondary-color: #4cc9f0;
+      --text-color: #333;
+      --text-light: #666;
+      --background: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+      --input-border: #d1d5db;
+      --input-focus: #4361ee;
+      --error-color: #f44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+    }
+
+    .header {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-color);
+      font-size: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background-color: #fff;
+      color: var(--text-color);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+
+    input:hover {
+      border-color: var(--primary-color);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+      margin-top: 15px;
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .form-footer {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      input {
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Add New Employee</h1>
+      <p>Enter the employee details below</p>
+    </div>
+
+    <form action="/employees/add" method="post">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter employee name" required />
+      </div>
+
+      <div class="form-group">
+        <label for="role">Job Role</label>
+        <input type="text" id="role" name="role" placeholder="Enter job role" required />
+      </div>
+
+      <div class="form-group">
+        <label for="baseSalary">Base Salary</label>
+        <input type="number" id="baseSalary" name="baseSalary" placeholder="Enter base salary amount" required />
+      </div>
+
+      <button type="submit" class="btn">Add Employee</button>
+    </form>
+
+    <div class="form-footer">
+      <a href="/employees" class="back-link">← Back to Employee List</a>
+    </div>
+  </div>
+</body>
+
+</html>

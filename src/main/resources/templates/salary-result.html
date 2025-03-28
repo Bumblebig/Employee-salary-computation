@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salary Result</title>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-hover: #3a56d4;
+      --secondary-color: #4cc9f0;
+      --text-color: #333;
+      --text-light: #666;
+      --background: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+      --success-color: #4caf50;
+      --success-light: rgba(76, 175, 80, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+    }
+
+    .header {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    .employee-info {
+      background-color: rgba(67, 97, 238, 0.05);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 25px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .employee-info p {
+      margin: 5px 0;
+      color: var(--text-color);
+    }
+
+    .employee-info strong {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .result-card {
+      background-color: var(--success-light);
+      border-radius: 10px;
+      padding: 25px;
+      margin: 30px 0;
+      text-align: center;
+      border: 1px solid var(--success-color);
+    }
+
+    .result-label {
+      font-size: 18px;
+      color: var(--text-color);
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+
+    .salary-amount {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--success-color);
+      margin-bottom: 10px;
+    }
+
+    .calculation-details {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: rgba(76, 201, 240, 0.1);
+      border-radius: 8px;
+    }
+
+    .calculation-details h3 {
+      font-size: 16px;
+      color: var(--text-color);
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .calculation-details p {
+      margin: 5px 0;
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--primary-color);
+      border: 1px solid var(--primary-color);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 25px;
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      .salary-amount {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Salary Computation</h1>
+      <p>Final compensation details</p>
+    </div>
+
+    <!-- Employee information (if available) -->
+    <div class="employee-info" th:if="${employee != null}">
+      <p><strong>Employee:</strong> <span th:text="${employee.name}">Employee Name</span></p>
+      <p><strong>Role:</strong> <span th:text="${employee.role}">Employee Role</span></p>
+      <p><strong>Base Salary:</strong> $<span th:text="${employee.baseSalary}">0.00</span></p>
+      <p th:if="${overtimeHours != null}"><strong>Overtime Hours:</strong> <span th:text="${overtimeHours}">0</span></p>
+    </div>
+
+    <div class="result-card">
+      <div class="result-label">Total Compensation</div>
+      <div class="salary-amount">$<span
+          th:text="${#numbers.formatDecimal(computedSalary, 0, 'COMMA', 2, 'POINT')}">0.00</span></div>
+      <p>Calculation completed successfully</p>
+    </div>
+
+    <!-- Optional: Calculation breakdown -->
+    <div class="calculation-details" th:if="${baseSalary != null && overtimeAmount != null}">
+      <h3>Calculation Breakdown</h3>
+      <p><strong>Base Salary:</strong> $<span
+          th:text="${#numbers.formatDecimal(baseSalary, 0, 'COMMA', 2, 'POINT')}">0.00</span></p>
+      <p><strong>Overtime Pay:</strong> $<span
+          th:text="${#numbers.formatDecimal(overtimeAmount, 0, 'COMMA', 2, 'POINT')}">0.00</span></p>
+    </div>
+
+    <div class="actions">
+      <a href="/employees" class="btn">Back to Employee List</a>
+      <a th:if="${employeeId != null}" th:href="@{/employees/{id}/compute-salary(id=${employeeId})}"
+        class="btn btn-outline">Recalculate</a>
+    </div>
+  </div>
+</body>
+
+</html>

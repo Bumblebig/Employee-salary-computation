@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compute Salary</title>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --primary-hover: #3a56d4;
+      --secondary-color: #4cc9f0;
+      --text-color: #333;
+      --text-light: #666;
+      --background: #f8f9fa;
+      --card-bg: #ffffff;
+      --border-color: #e0e0e0;
+      --input-border: #d1d5db;
+      --input-focus: #4361ee;
+      --success-color: #4caf50;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--background);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 500px;
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px;
+    }
+
+    .header {
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .header h1 {
+      font-size: 28px;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .header p {
+      color: var(--text-light);
+      font-size: 16px;
+    }
+
+    .employee-info {
+      background-color: rgba(67, 97, 238, 0.05);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 25px;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .employee-info p {
+      margin: 5px 0;
+      color: var(--text-color);
+    }
+
+    .employee-info strong {
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 8px;
+      color: var(--text-color);
+      font-size: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      font-size: 15px;
+      transition: all 0.3s ease;
+      background-color: #fff;
+      color: var(--text-color);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--input-focus);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+    }
+
+    input:hover {
+      border-color: var(--primary-color);
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: var(--primary-color);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .salary-result {
+      margin-top: 25px;
+      padding: 15px;
+      background-color: rgba(76, 201, 240, 0.1);
+      border-radius: 8px;
+      text-align: center;
+      border: 1px solid var(--secondary-color);
+    }
+
+    .salary-result h3 {
+      color: var(--text-color);
+      margin-bottom: 10px;
+    }
+
+    .salary-amount {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--success-color);
+    }
+
+    .form-footer {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    .back-link {
+      display: inline-block;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--primary-hover);
+      text-decoration: underline;
+    }
+
+    .info-text {
+      font-size: 14px;
+      color: var(--text-light);
+      margin-top: 8px;
+    }
+
+    @media (max-width: 576px) {
+      .container {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+      }
+
+      input {
+        padding: 10px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Compute Salary</h1>
+      <p>Calculate employee compensation with overtime</p>
+    </div>
+
+    <!-- Employee Information -->
+    <div class="employee-info" th:if="${employee != null}">
+      <p><strong>Employee:</strong> <span th:text="${employee.name}">Employee Name</span></p>
+      <p><strong>Role:</strong> <span th:text="${employee.role}">Employee Role</span></p>
+      <p><strong>Base Salary:</strong> $<span
+          th:text="${#numbers.formatDecimal(employee.baseSalary, 0, 'COMMA', 2, 'POINT')}">0.00</span></p>
+    </div>
+
+    <!-- Salary Computation Form -->
+    <form th:action="@{/employees/{id}/compute-salary(id=${employee.id})}" method="post">
+      <div class="form-group">
+        <label for="overtimeHours">Overtime Hours</label>
+        <input type="number" id="overtimeHours" name="overtimeHours" placeholder="Enter number of overtime hours"
+          min="0" step="0.5" required />
+        <p class="info-text">Overtime is calculated at 1.5x the regular hourly rate</p>
+      </div>
+
+      <button type="submit" class="btn">Calculate Salary</button>
+    </form>
+
+    <!-- Salary Result Section -->
+    <div class="salary-result" th:if="${computedSalary != null}">
+      <h3>Total Compensation</h3>
+      <div class="salary-amount">
+        $<span th:text="${#numbers.formatDecimal(computedSalary, 0, 'COMMA', 2, 'POINT')}">0.00</span>
+      </div>
+
+      <!-- Calculation Breakdown -->
+      <div class="calculation-details">
+        <h4>Calculation Breakdown</h4>
+        <p><strong>Base Salary:</strong> $<span
+            th:text="${#numbers.formatDecimal(baseSalary, 0, 'COMMA', 2, 'POINT')}">0.00</span></p>
+        <p><strong>Overtime Hours:</strong> <span th:text="${overtimeHours}">0</span></p>
+      </div>
+    </div>
+
+    <div class="form-footer">
+      <a href="/employees" class="back-link">← Back to Employee List</a>
+    </div>
+  </div>
+</body>
+
+</html>
